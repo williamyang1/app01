@@ -2,22 +2,6 @@
 {% block content %}
     <div class="container">
 
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">DVS-SC Virtual Submission Triage</h3>
-            </div>
-            <div class="panel-body">
-                <form method="post" enctype="multipart/form-data" novalidate>
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label type="text">Submission UUID</label>
-                        <input type="text",  name="SUUID", placeholder="virtual submission"  class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-
-            </div>
-        </div>
 
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -56,41 +40,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Triage Test result</h3>
             </div>
-
-            <table class="table table-bordered" >
-                <thead>
-                <tr>
-                    <th>UUID</th>
-                    <th>Status</th>
-                    <th>Download</th>
-                    <th>Del</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for obj in uuid_queryset %}
-                    <tr>
-                        <th scope="row">{{ obj.UUID }}</th>
-                        <td>{{ obj.status }}</td>
-                        <td>
-                            {% if "#" == obj.result_excel %}
-                                #
-                            {% else %}
-                                <a href="/media/{{ obj.result_excel }}">{{ obj.result_excel }}</a></td>
-                            {% endif %}
-                        <td>
-                            <a class="btn btn-danger btn-xs" href="/triage/{{ obj.id }}/uuid_delete/">delete</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-
-        </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Triage Test result</h3>
-            </div>
-            <table class="table table-bordered" >
+            <table class="table table-bordered" style="word-break: break-all; word-wrap: break-all;" >
                 <thead>
                 <tr>
                     <th>Log</th>

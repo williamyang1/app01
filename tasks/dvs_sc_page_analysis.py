@@ -89,17 +89,20 @@ def get_specific_links(page_text):
     # print(page_text)
     soup = BeautifulSoup(page_text, 'html.parser')
     table_node = soup.find_all('table')
-
+    for tt in table_node:
+        print("XXXXXXXXXXXXX")
+        print(tt.get_text())
     test_result_table = table_node[13::3]
-
-
+    print("NNNN",len(test_result_table))
     result_dict = {}
     for mytable in test_result_table:
         for row in mytable.find_all("tr"):
+            # print("TR")
             if len(row.find_all("td")) == 8:
                 testsuite = row.find_all("td")[1].get_text()
-
-            if len(row.find_all("td")) == 15:
+                # print("TD",testsuite)
+            if len(row.find_all("td")) == 16:
+                # print("TD15")
                 branch = row.find_all("td")[0].get_text()
                 Type = row.find_all("td")[1].get_text()
                 Platform = row.find_all("td")[2].get_text()
@@ -109,17 +112,26 @@ def get_specific_links(page_text):
                 CPU = row.find_all("td")[3].get_text()
                 GPU = row.find_all("td")[4].get_text()
                 DX = row.find_all("td")[5].get_text()
-
+                # print(GPU)
                 if DX == '0':
                     DXstr = "DX0"
                 else:
                     DXstr = "DX12"
-                # print(branch + " " + Type + " " + Platform + " " + CPU + " " + GPU + " " + DXstr + " " + testsuite)
+                print(branch + " " + Type + " " + Platform + " " + CPU + " " + GPU + " " + DXstr + " " + testsuite)
                 conf = branch + " " + Type + " " + Platform + " " + CPU + " " + GPU + " " + DXstr + " " + testsuite
-                if row.find_all('a'):
-                    result_link = row.find_all('a')[0].get('href')
+                # if row.find_all('a'):
+                # print(row.find_all("td")[10].get_text())
+                # print(row.find_all("td")[10])
+
+                # print(row.find_all("td")[10].find("a").get('href'))
+
+
+                if row.find_all("td")[10].find_all("a"):
+                    # print(row.find_all("td")[10].find_all("a")[0].get('href'))
+                    result_link = row.find_all("td")[10].find_all("a")[0].get('href')
+                    print(result_link)
                     result_dict[conf] = result_link
-    #print(result_dict)
+    print(result_dict)
     return result_dict
 
 def get_specific_testCase_result(cmd,testlog):
@@ -152,9 +164,9 @@ def get_testcase_result(uuid,configuration,testcase):
     test_dict = get_specific_links(page_text)
     print(configuration)
     if configuration not in test_dict.keys():
-
-        # print(test_dict.keys())
+        print("keys",test_dict.keys())
         result="Not found this configuration"
+        # exit(0)
         return result
     # config = "cudnn_rc_hopper_cuda_11.8 Release RHEL8 64 amd_epyc7413_24c gh100_pg520_0201 DX12 CUDNN.LEVEL.TESTS.L4"
     # testcase = "cudnnTest -Rwgrad -n5 -Ps -algo1 -formatIn1 -filtFormat1 -formatOut1"

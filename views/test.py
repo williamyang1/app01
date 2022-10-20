@@ -27,7 +27,7 @@ def city_list(request):
         time.sleep(5)
     return HttpResponse("...")
 
-def update_uuid_table(request):
+def test(request):
     print("TEST")
     update()
     resultj={"result":True}
@@ -41,7 +41,7 @@ def test1(request):
     return JsonResponse({"result":True})
 
 
-def test(request):
+def test2(request):
 # def startjob(request):
     proc=Popen()
     content={
