@@ -1,0 +1,68 @@
+{
+	"rootpath"	:	"http://cuda-internal.nvidia.com/release-candidates/kitbundles/cudnn/",
+	"Branch"	: ["v8.8_cuda_11.4", "v8.8_cuda_11.8","v8.8_cuda_12.0" ],
+	"v8.8_cuda_11.4":{
+		"local_installers"	: [       
+			"cudnn-local-repo-ubuntu2004-*_amd64.deb"
+		],
+		"redist/cudnn/cudnn/linux-x86_64"	:	[
+			"cudnn-linux-x86_64-*_cuda11-archive.tar.xz"]	
+	},
+	"v8.8_cuda_11.8":
+	{
+		"local_installers"	: 	[
+			"cudnn-local-repo-cross-sbsa-ubuntu2004-*_all.deb", 
+			"cudnn-local-repo-cross-sbsa-ubuntu2204-*_all.deb",             
+			"cudnn-local-repo-rhel8-*.aarch64.rpm",            
+			"cudnn-local-repo-rhel8-*.ppc64le.rpm",            
+			"cudnn-local-repo-rhel8-*.x86_64.rpm",       
+			"cudnn-local-repo-rhel9-*.x86_64.rpm",  			                
+			"cudnn-local-repo-ubuntu2004-*_amd64.deb",         
+			"cudnn-local-repo-ubuntu2004-*_arm64.deb",    
+			"cudnn-local-repo-ubuntu2204-*_arm64.deb",  			
+			"cudnn-local-repo-ubuntu2204-*_amd64.deb",
+            "cudnn-local-repo-debian11-*_amd64.deb",			
+			"cudnn_*_windows.exe" 
+		],
+		"redist/cudnn/cudnn/linux-x86_64"	:	[
+			"cudnn-linux-x86_64-*_cuda11-archive.tar.xz"],
+		"redist/cudnn/cudnn/windows-x86_64"	:	[
+			"cudnn-windows-x86_64-*_cuda11-archive.zip"], 
+		"redist/cudnn/cudnn/linux-ppc64le"	:	[
+			"cudnn-linux-ppc64le-*_cuda11-archive.tar.xz"],
+		"redist/cudnn/cudnn/linux-sbsa"	:	[
+			"cudnn-linux-sbsa-*_cuda11-archive.tar.xz"]
+	},
+	"v8.8_cuda_12.0":
+	{
+		"local_installers"	: 	[
+			"cudnn-local-repo-cross-sbsa-ubuntu2004-*_all.deb", 
+			"cudnn-local-repo-cross-sbsa-ubuntu2204-*_all.deb",             
+			"cudnn-local-repo-rhel8-*.aarch64.rpm",            
+			"cudnn-local-repo-rhel8-*.ppc64le.rpm",            
+			"cudnn-local-repo-rhel8-*.x86_64.rpm",       
+			"cudnn-local-repo-rhel9-*.x86_64.rpm",  			                
+			"cudnn-local-repo-ubuntu2004-*_amd64.deb",         
+			"cudnn-local-repo-ubuntu2004-*_arm64.deb",    
+			"cudnn-local-repo-ubuntu2204-*_arm64.deb",  			
+			"cudnn-local-repo-ubuntu2204-*_amd64.deb",
+            "cudnn-local-repo-debian11-*_amd64.deb",			
+			"cudnn_*_windows.exe" 
+		],
+		"redist/cudnn/cudnn/linux-x86_64"	:	[
+			"cudnn-linux-x86_64-*_cuda12-archive.tar.xz"],
+		"redist/cudnn/cudnn/windows-x86_64"	:	[
+			"cudnn-windows-x86_64-*_cuda12-archive.zip"],
+		"redist/cudnn/cudnn/linux-ppc64le"	:	[
+			"cudnn-linux-ppc64le-*_cuda12-archive.tar.xz"],
+		"redist/cudnn/cudnn/linux-sbsa"	:	[
+			"cudnn-linux-sbsa-*_cuda12-archive.tar.xz"]
+	}
+}
+
+
+    
+ 
+      
+ 
+

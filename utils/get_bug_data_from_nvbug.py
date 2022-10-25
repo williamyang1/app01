@@ -13,7 +13,7 @@ class NvbugsUtils:
         #print(self.user)
         try:
             r=requests.get(url,auth=(self.user, self.password))
-            print(r.json())
+            # print(r.json())
 
             content = r.json()
             #print(content["ReturnValue"]["DescriptionPlainTextReadOnly"])
@@ -58,7 +58,7 @@ class NvbugsUtils:
         print(r.json())
     def get_watchlist(self,watchlistid):
         #https: // confluence.nvidia.com / display / NVBUG / GetSavedSearchBugs
-        url="https://nvbugsapi.nvidia.com/NVBugsWebServiceApi/api/Search/GetSavedSearchBugs?id="+str(watchlistid)
+        url="https://nvbugsapi.nvidia.com/NVBugsWebServiceApi/api/Search/GetSavedSearchBugs?id="+str(watchlistid) +"&limit=200"
         r=requests.get(url,auth=(self.user, self.password))
         #print(r.json())
         buglist=[]
@@ -81,7 +81,7 @@ def get_buglist_detail():
 
 
 def main():
-    bug=NvbugsUtils("williamy","Williamy1203#")
+    bug=NvbugsUtils("williamy","Y20hg1203wi45#")
     print(bug.get_bug_details(200742297))
     bug.get_bug_list()
     # buglist=bug.get_watchlist(cudnn_new_bugs)

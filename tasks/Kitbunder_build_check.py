@@ -2,9 +2,7 @@ import os
 import json
 import requests
 import sys
-version="8.6.0.150"
-config_file="./config/kitmaker.txt"
-config_urm_file="./config/urm.txt"
+
 from bs4 import BeautifulSoup
 def get_config(config_f):
     print(config_f)
@@ -16,7 +14,7 @@ def get_config(config_f):
     sys.stdout.flush()
     return config_json
 
-def get_files(config_json):
+def get_files(config_json,version):
     result=[]
     root=config_json["rootpath"]
     for branch in config_json["Branch"]:
@@ -26,12 +24,12 @@ def get_files(config_json):
             requires=config_json[branch][path]
             text = get_page_content(folder)
             builds = get_builds(text)
-            result.extend((compare_builds(builds, requires)))
+            result.extend((compare_builds(builds, requires,version)))
     return result
 
 
 
-def compare_builds(builds, requireds):
+def compare_builds(builds, requireds,version):
     result=[]
     #print(requireds)
     for required in requireds:
@@ -73,7 +71,7 @@ def get_builds(page_text):
         if link.get_text().find("cudnn")!=-1:
             builds.append(link.get_text())
     return builds
-def get_files_urm(config_json):
+def get_files_urm(config_json,version):
     result=[]
     root=config_json["rootpath"]
     for branch in config_json["Branch"]:
@@ -83,27 +81,35 @@ def get_files_urm(config_json):
             requires=config_json[branch][path]
             text = get_page_content(folder)
             builds = get_builds(text)
-            result.extend(compare_builds(builds, requires))
+            result.extend(compare_builds(builds, requires,version))
     return result
 def kitbunds_test(version):
     global config_file
     global config_urm_file
-    # if __name__ == "__main__":
-    #     config_f= config_file
-    #     config_urm_file=config_urm_file
-    # else:
-    config_f=os.path.join(os.getcwd(), "app01", "tasks", "config", "kitmaker.txt")
-    config_urm_file=os.path.join(os.getcwd(), "app01", "tasks", "config", "urm.txt")
+    if __name__ == "__main__":
+        if version.find("8.7.0")!=-1:
+            config_f= "./config/kitmaker.txt"
+            config_urm_file="./config/urm.txt"
+        else:
+            config_f = "./config/kitmaker_dev.txt"
+            config_urm_file = "./config/urm_dev.txt"
+    else:
+        if version.find("8.7.0") != -1:
+            config_f=os.path.join(os.getcwd(), "app01", "tasks", "config", "kitmaker.txt")
+            config_urm_file=os.path.join(os.getcwd(), "app01", "tasks", "config", "urm.txt")
+        else:
+            config_f = os.path.join(os.getcwd(), "app01", "tasks", "config", "kitmaker_dev.txt")
+            config_urm_file = os.path.join(os.getcwd(), "app01", "tasks", "config", "urm_dev.txt")
     result=[]
     config_kitbundls=get_config(config_f)
-    result1=get_files(config_kitbundls)
+    result1=get_files(config_kitbundls,version)
     config_urm = get_config(config_urm_file)
-    result2=get_files_urm(config_urm)
+    result2=get_files_urm(config_urm,version)
     result.extend(result1)
     result.extend(result2)
 
     return result
 if __name__ == "__main__":
-    kitbunds_test(sys.argv[1])
+    kitbunds_test("8.7.0.55")
 
 

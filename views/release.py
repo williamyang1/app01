@@ -13,7 +13,32 @@ from subprocess import Popen
 
 def release_tasks(request):
     title ="kitbundles test"
-    bug_list = [3609771]
+    bug_list = []
+    queryset = models.NvBug.objects.filter(BugId__in=bug_list)
+    result_list = []
+    result_dict= {
+        "title":title,
+        "bug_list":bug_list,
+        "version" :None,
+        "result_list" :result_list,
+        "queryset": queryset,
+    }
+
+    if request.method == "POST":
+        print(request.POST.get("version"))
+        version=request.POST.get("version")
+        results=kitbunds_test(version)
+        print("RRRRR",results)
+
+        result_list.extend(results)
+        return render(request, "release_tasks.html", result_dict)
+    if request.method == "GET":
+        return render(request, "release_tasks.html",result_dict)
+
+
+def release_tasks1(request):
+    title ="kitbundles test"
+    bug_list = []
     queryset = models.NvBug.objects.filter(BugId__in=bug_list)
     result_list = []
     result_dict= {
@@ -51,17 +76,17 @@ def release_tasks(request):
         result_list.extend(lines)
     return render(request, "release_tasks.html",result_dict)
 
-def release_del(request):
-    if request.session.has_key("kitbunds"):
-        job=request.session["kitbunds"]
-        try:
-            if request.session.has_key("jobfile"):
-                filename = request.session["jobfile"]
-                unlink(filename)
-                del request.session['jobfile']
-                # kill(job,signal.SIGKILL)
-        except OSError as e:
-            pass
-        del request.session['kitbunds']
-
-    return redirect("/release/tasks/")
+# def release_del(request):
+#     if request.session.has_key("kitbunds"):
+#         job=request.session["kitbunds"]
+#         try:
+#             if request.session.has_key("jobfile"):
+#                 filename = request.session["jobfile"]
+#                 unlink(filename)
+#                 del request.session['jobfile']
+#                 # kill(job,signal.SIGKILL)
+#         except OSError as e:
+#             pass
+#         del request.session['kitbunds']
+#
+#     return redirect("/release/tasks/")

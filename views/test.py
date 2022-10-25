@@ -1,7 +1,7 @@
 import json
 from django.shortcuts import render, redirect,HttpResponse
 from django.http import JsonResponse
-from app01.tasks.update_DB import update
+
 from tempfile import mkstemp
 from os import fdopen,unlink,kill
 import signal
@@ -15,7 +15,7 @@ from django import forms
 from app01.utils.bootstrap import BootStrapForm, BootStrapModeForm
 from app01 import models
 import time
-from app01.tasks.update_DB import update
+
 from app01.views.bug import bugs_update
 
 def city_list(request):
@@ -27,7 +27,7 @@ def city_list(request):
         time.sleep(5)
     return HttpResponse("...")
 
-def test(request):
+def uuid_update(request):
     print("TEST")
     update()
     resultj={"result":True}

@@ -22,9 +22,8 @@ def UUID_DB_update_branch(version_prefix,branch):
 def UUID_DB_update():
     UUID_DB_update_branch("8.7.0.","cudnn_rc_hopper_cuda_11.8")
     UUID_DB_update_branch("8.8.0.", "cudnn_dev_next")
-def update():
-    UUID_DB_update()
+
 
 
 if __name__ == '__main__':
-    update()
+    UUID_DB_update()

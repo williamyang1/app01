@@ -9,20 +9,34 @@ from app01.utils.form import *
 from django.db.models import Q
 from app01.utils.get_bug_data_from_nvbug import NvbugsUtils
 
+
+
 def bugs_update(request):
     bug = NvbugsUtils("williamy", "Y20hg1203wi45#")
     #print(bug.get_bug_details(200742297))
     cuDNN_QA_filed_open_Bugs = 200045751
     #QA_actionable_buts = 200053667
     #QA_actionable_buts=[3785542, 3782813,3782592,3775740]
-    QA_actionable_buts = [3609771]
-    for bugid in QA_actionable_buts:
+    QA_actionable_buts = []
+    bug_list=bug.get_watchlist(200116815)
+    print("bug_list",bug_list)
+    print(len(bug_list))
+
+    # for bugid in models.NvBug.objects.all():
+    #     print(bugid.BugId)
+    #     print(bug.get_bug_details(bugid.BugId))
+        # BugId, Synopsis, BugAction, Engineer, Version, Module, Disposition, Regression, Keywords, Created, DaysOpen, Origin, Version, ModifiedDate, Priority, RequestDate, Categories, QAEngineer=bug.get_bug_details(bugid.BugId)
+        # if BugAction == "QA - Closed - Verified":
+        #      print(bugid.BugAction)
+        #      models.NvBug.objects.filter(BugId=bugid.BugId).delete()
+    for bugid in bug_list:
         print("BBBBBBug id",bugid)
         if models.NvBug.objects.filter(BugId=bugid).exists():
-            print("Exist")
+            print("bug Exist")
         else:
             print("Not exist")
             BugId,Synopsis,BugAction,Engineer,Version,Module,Disposition, Regression,Keywords,Created,DaysOpen,Origin,Version, ModifiedDate,Priority,RequestDate,Categories,QAEngineer=bug.get_bug_details(bugid)
+            print(BugId)
             buglink="https://nvbugs/"+str(bugid)
             models.NvBug.objects.create(
                 BugId=BugId,
@@ -121,3 +135,51 @@ def bugs_multi(request):
                  DaysOpen=DaysOpen,
              )
     return redirect("/bugs/list/")
+
+def bugs_DB_update():
+    bug = NvbugsUtils("williamy", "Y20hg1203wi45#")
+    #print(bug.get_bug_details(200742297))
+    cuDNN_QA_filed_open_Bugs = 200045751
+    #QA_actionable_buts = 200053667
+    #QA_actionable_buts=[3785542, 3782813,3782592,3775740]
+    QA_actionable_buts = []
+    bug_list=bug.get_watchlist(200116815)
+    print("bug_list",bug_list)
+    print(len(bug_list))
+
+    for bugid in models.NvBug.objects.all():
+        print(bugid.BugId)
+        print(bug.get_bug_details(bugid.BugId))
+        BugId, Synopsis, BugAction, Engineer, Version, Module, Disposition, Regression, Keywords, Created, DaysOpen, Origin, Version, ModifiedDate, Priority, RequestDate, Categories, QAEngineer=bug.get_bug_details(bugid.BugId)
+        if BugAction == "QA - Closed - Verified":
+             print(bugid.BugAction)
+             models.NvBug.objects.filter(BugId=bugid.BugId).delete()
+    for bugid in bug_list:
+        print("BBBBBBug id",bugid)
+        if models.NvBug.objects.filter(BugId=bugid).exists():
+            print("bug Exist")
+        else:
+            print("Not exist")
+            BugId,Synopsis,BugAction,Engineer,Version,Module,Disposition, Regression,Keywords,Created,DaysOpen,Origin,Version, ModifiedDate,Priority,RequestDate,Categories,QAEngineer=bug.get_bug_details(bugid)
+            print(BugId)
+            buglink="https://nvbugs/"+str(bugid)
+            models.NvBug.objects.create(
+                BugId=BugId,
+                Synopsis=Synopsis,
+                BugAction=BugAction,
+                Module=Module,
+                Priority=Priority,
+                RequestDate=RequestDate,
+                Categories=Categories,
+                Disposition=Disposition,
+                QAEngineer=QAEngineer,
+                Engineer=Engineer,
+                CustomKeywords=Keywords,
+                ModifiedDate=ModifiedDate,
+                Version=Version,
+                Origin=Origin,
+                Regression=Regression,
+                buglink=buglink,
+                DaysOpen=DaysOpen,
+            )
+    print("BUG DB update")
